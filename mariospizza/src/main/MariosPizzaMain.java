@@ -28,6 +28,12 @@ public class MariosPizzaMain {
         
         Controller ctrl = new Controller(new SystemUI(), menukort);
         
+        System.out.println("");
+        System.out.println("##################################");
+        System.out.println("##########MARIOS PIZZABAR#########");
+        System.out.println("##################################");
+        System.out.println("");
+        
         ctrl.start();
         
         
