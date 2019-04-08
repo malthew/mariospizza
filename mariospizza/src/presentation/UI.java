@@ -35,4 +35,8 @@ public interface UI {
     public void skrivHistorik(ArrayList<Bestilling> historik);
 
     public String vælgTidspunkt();
+
+    public String vælgNavn();
+
+    public String vælgTlfno();
 }

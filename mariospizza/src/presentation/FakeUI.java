@@ -117,4 +117,14 @@ public class FakeUI implements UI {
         return "Tidspunkt";
     }
 
+    @Override
+    public String vælgNavn() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String vælgTlfno() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

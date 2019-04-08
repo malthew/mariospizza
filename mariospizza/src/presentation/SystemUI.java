@@ -136,7 +136,19 @@ public class SystemUI implements UI{
 
     @Override
     public String vælgTidspunkt() {
-        System.out.println("Skriv kundens afhentningstidspunkt:");
+        System.out.println("Skriv kundens afhentningstidspunkt: FORMAT(HH:MM)");
+        return scan.nextLine();
+    }
+
+    @Override
+    public String vælgNavn() {
+         System.out.println("Skriv kundens navn:");
+        return scan.nextLine();
+    }
+
+    @Override
+    public String vælgTlfno() {
+        System.out.println("Skriv kundens telefonnummer:");
         return scan.nextLine();
     }
 
