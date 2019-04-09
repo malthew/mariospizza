@@ -12,7 +12,7 @@ import storage.DatabaseConnection;
 public class MariosPizzaMain {
     public static void main(String[] args) throws Exception {
         
-        
+        //Allan rules
         Controller ctrl = new Controller(new SystemUI(), new DatabaseConnection());
         
         System.out.println("");
