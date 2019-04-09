@@ -7,8 +7,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // @Author: Allan, Aske, Casper T. og Malthe
 
@@ -67,7 +65,7 @@ public class FakeUI implements UI {
     }
 
     @Override
-    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer) {
+    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer, boolean bypassRS) {
         int i = 1;
         for(Bestilling bestilling:aktiveOrdrer) {
             output.add("" + i++ + ". " + bestilling.toString());          
@@ -127,5 +125,5 @@ public class FakeUI implements UI {
     public String vælgTlfno() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
