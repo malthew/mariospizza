@@ -59,8 +59,17 @@ public class DatabaseConnection {
         Statement statement = connection.createStatement();
               System.out.println(LocalDate.now());
         statement.executeUpdate("INSERT INTO ordre(afhent, oprettet, cname, tlfno) VALUES ('" + LocalDate.now() + " " + bestilling.getAfhentningsTidspunkt() +":00" + "', '" + LocalDate.now() + "'," + "'" + bestilling.getCname() + "'," + bestilling.getTlfno() + ");");
-       
-    
+        ResultSet result = statement.executeQuery("select count(ORDRENO) from ordre;");
+        int nummer = 0;
+         while (result.next()){
+            nummer = result.getInt("count(ORDRENO)");
+        }
+         int[] bestillingsArray = bestilling.getPizzaNumre();
+        for(int i = 0; i < bestillingsArray.length; i++){
+            if(bestillingsArray[i] != 0){
+                statement.executeUpdate("INSERT INTO antal VALUES(" + bestillingsArray[i] + ", " + nummer + ", " + i+1 + ");");
+            }
+        }
         }
 }
 

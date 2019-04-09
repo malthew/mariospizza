@@ -17,15 +17,23 @@ public class SystemUI implements UI{
     Scanner scan = new Scanner(System.in);
 
     @Override
-    public int vælgPizza() {
+    public int[] vælgPizza() {
         System.out.println("Skriv hvilket pizzanummer kunden har bestilt:");
+        int[] bestillingsArray = new int[14];
+        
         int input = Integer.parseInt(scan.nextLine());
+        
+        while(input != -1){
             if (input>=1 && input<=14) {
-                return input;
+                bestillingsArray[input-1]++;
+                System.out.println("Skriv hvilket pizzanummer kunden har bestilt:");
             } else{
                 System.out.println("Ikke en mulighed, prøv igen:");
-                return vælgPizza();
+                
             }
+            input = Integer.parseInt(scan.nextLine());
+        }
+        return bestillingsArray;
     }
 
     @Override

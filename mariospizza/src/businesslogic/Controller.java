@@ -1,6 +1,7 @@
 package businesslogic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import presentation.UI;
 import storage.DatabaseConnection;
 
@@ -64,18 +65,19 @@ public class Controller {
 
     public void opretBestilling() {
         // indlæs pizzanummer
-        int pizzaNummer = ui.vælgPizza();
+        int[] pizzaNummer = ui.vælgPizza();
+        System.out.println(Arrays.toString(pizzaNummer));
         // opret bestilling
         String afhentning = ui.vælgTidspunkt();
         String navn = ui.vælgNavn();
         String tlfno = ui.vælgTlfno();
-        Bestilling bestilling = new Bestilling(menukort.get(pizzaNummer - 1), currentOrderNr, afhentning, navn, tlfno);
+        Bestilling bestilling = new Bestilling(pizzaNummer, currentOrderNr, afhentning, navn, tlfno);
         // Tilføj bestilling til ordreliste
         aktiveOrdrer.add(bestilling);
         try{
         DatabaseConnection.addToOrdre(bestilling);
         }catch(Exception e){
-            System.out.println("LORT");
+            System.out.println("SQL DUTTER IKKE");
             System.out.println(e.getMessage());
         }
         // viser ordrenummer på skærm

@@ -12,7 +12,7 @@ public interface UI {
 //    
 //    public String vælgNavn();    
 
-    public int vælgPizza();
+    public int[] vælgPizza();
 
     public void visPizzaValg(String string);
 
