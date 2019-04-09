@@ -74,15 +74,8 @@ public class DatabaseConnection {
         }
           public static ArrayList<Bestilling> visBestillinger( ) throws Exception{
         
-        String user = "newuser";
-        String password = "Aa12345678";
-        String IP = "localhost";
-        String PORT = "3306";
-        String DATABASE = "mario";
-        String serverTimezone = "serverTimezone=UTC";
-        String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
         
-        Connection connection =DriverManager.getConnection(url, user, password);
+        Connection connection = makeConnection();
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM ordre");
         ArrayList<Bestilling> returnArray = new ArrayList();
@@ -106,6 +99,18 @@ public class DatabaseConnection {
         }
         
         return returnArray;
+        }
+          
+        private static Connection makeConnection() throws Exception{
+         String user = "newuser";
+        String password = "Aa12345678";
+        String IP = "localhost";
+        String PORT = "3306";
+        String DATABASE = "mario";
+        String serverTimezone = "serverTimezone=UTC";
+        String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
+        
+            return DriverManager.getConnection(url, user, password);
         }
 }
 

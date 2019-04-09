@@ -24,7 +24,7 @@ public class Controller {
     }
       
     
-    public void start() {
+    public void start() throws Exception {
         boolean quit = false;
         do{
             ui.visHovedmenu();
@@ -103,8 +103,9 @@ public class Controller {
         ui.visMenukort(menukort);
     }   
 
-    private void visBestillinger() {
-        ui.visBestillinger(aktiveOrdrer);
+    private void visBestillinger() throws Exception {
+        
+        ui.visBestillinger(DatabaseConnection.visBestillinger());
     }
 
     private void fjernBestilling() {

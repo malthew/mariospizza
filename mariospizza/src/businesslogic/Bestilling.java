@@ -3,6 +3,9 @@ package businesslogic;
 
 // @Author: Allan, Aske, Casper T. og Malthe
 
+import java.util.Arrays;
+
+
 public class Bestilling {
     private int[] pizzaNumre;
     private int ordreNummer;
@@ -37,10 +40,12 @@ public class Bestilling {
     public String getTlfno() {
         return tlfno;
     }
-    
+
     @Override
     public String toString() {
-        return "Bestilling: " + ", Ordrenummer: " + ordreNummer + ", Afhentes: " + afhentningsTidspunkt;
+        return "Bestilling{" + "pizzaNumre=" + Arrays.toString(pizzaNumre) + ", ordreNummer=" + ordreNummer + ", afhentningsTidspunkt=" + afhentningsTidspunkt + ", cname=" + cname + ", tlfno=" + tlfno + '}';
     }
+    
+    
     
 }
