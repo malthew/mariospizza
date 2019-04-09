@@ -90,14 +90,17 @@ public class Controller {
 
     private void visBestillinger() throws Exception {
         
-        ui.visBestillinger(storage.getBestillinger());
+        ui.visBestillinger(storage.getBestillinger(), false);
     }
 
     private void fjernBestilling() throws Exception {
-        visBestillinger();
+        ui.visBestillinger(storage.getBestillinger(), true);
         int x = ui.fjernBestilling(storage.countOrders());
         //TODO: FIX HISTORIK - historik.add(aktiveOrdrer.get(x-1));
-        storage.fjernBestilling(storage.getBestillinger().get(x-1).getOrdreNummer());
+        if(x != -1) {
+           storage.fjernBestilling(storage.getBestillinger().get(x-1).getOrdreNummer());
+        }
+        
     }
 
     private void seHistorik() {
