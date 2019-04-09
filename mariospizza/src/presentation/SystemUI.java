@@ -54,6 +54,18 @@ public class SystemUI implements UI{
             System.out.println(pizza.toString());
         }
         System.out.println("-----------------------------------------------");
+        System.out.println("For at retunere til Hovedmenu indtast '-1':");
+            boolean inputFormat = false;
+            while(!inputFormat){
+                String input = scan.nextLine();
+                if(input.equals("-1")) {
+                    inputFormat = true;
+                }
+                else
+                    System.out.println("Ugyldigt input, prøv igen:");
+            } 
+        System.out.println("-----------------------------------------------");
+        flushConsole();
     }
 
     @Override
@@ -73,23 +85,39 @@ public class SystemUI implements UI{
     }
 
     @Override
-    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer) {
+    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer, boolean bypassRS) {
         int i = 1;
         if (aktiveOrdrer.size()>0) {
             for(Bestilling bestilling:aktiveOrdrer) {
                 System.out.println("" + i++ + ". " + bestilling.toString());
                 
             }
-        }
-        else
+            if (!bypassRS) {          
+            
+            System.out.println("-----------------------------------------------");
+            System.out.println("For at retunere til Hovedmenu indtast '-1':");
+            boolean inputFormat = false;
+            while(!inputFormat){
+                String input = scan.nextLine();
+                if(input.equals("-1")) {
+                    inputFormat = true;
+                }
+                else
+                    System.out.println("Ugyldigt input, prøv igen:");
+            }
+            System.out.println("-----------------------------------------------");
+            flushConsole();
+            }
+      }
+        else {
             System.out.println("[Ingen aktive bestillinger]");
-        
-        System.out.println("-----------------------------------------------");
+            flushConsole();
+        }
     }
 
     @Override
     public int fjernBestilling(int arraySize) {
-        System.out.println("Fjern en bestilling:");
+        System.out.println("Fjern en bestilling (Indtast '-1' for retur):");
         int returnStatement = 0;
         boolean inputFormat = false;
         while(!inputFormat) {
@@ -97,13 +125,18 @@ public class SystemUI implements UI{
                 returnStatement = Integer.parseInt(scan.nextLine());
                 if(returnStatement >= 0 && returnStatement <= arraySize) {
                     inputFormat = true;
-                }else{
+                }
+                else if(returnStatement == -1) {
+                    inputFormat = true;
+                }
+                else{
                     throw new IndexOutOfBoundsException();
                 }
             }catch(Exception e) {
                 System.out.println("Ugyldigt input, prøv igen:");
             }
         }
+        flushConsole();
         return returnStatement;
     }
 
@@ -158,6 +191,12 @@ public class SystemUI implements UI{
     public String vælgTlfno() {
         System.out.println("Skriv kundens telefonnummer:");
         return scan.nextLine();
+    }
+    
+    private void flushConsole() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
     }
 
 }
