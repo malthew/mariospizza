@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+
 /**
  *
  * @author allan
@@ -67,9 +68,44 @@ public class DatabaseConnection {
          int[] bestillingsArray = bestilling.getPizzaNumre();
         for(int i = 0; i < bestillingsArray.length; i++){
             if(bestillingsArray[i] != 0){
-                statement.executeUpdate("INSERT INTO antal VALUES(" + bestillingsArray[i] + ", " + nummer + ", " + i+1 + ");");
+                statement.executeUpdate("INSERT INTO antal VALUES(" + bestillingsArray[i] + ", " + nummer + ", " + (i+1) + ");");
             }
         }
+        }
+          public static ArrayList<Bestilling> visBestillinger( ) throws Exception{
+        
+        String user = "newuser";
+        String password = "Aa12345678";
+        String IP = "localhost";
+        String PORT = "3306";
+        String DATABASE = "mario";
+        String serverTimezone = "serverTimezone=UTC";
+        String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
+        
+        Connection connection =DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT * FROM ordre");
+        ArrayList<Bestilling> returnArray = new ArrayList();
+        
+        while (result.next()){
+            int ordreNummer = result.getInt("ORDRENO");
+            String cnavn = result.getString("CNAME");
+            String tlfno = result.getString("TLFNO");
+            String dato = result.getTimestamp("AFHENT").toString();
+            
+            Statement statement2 = connection.createStatement();
+            ResultSet pizzaResults = statement2.executeQuery("SELECT * FROM antal WHERE ORDRENO =" + ordreNummer + ";");
+            
+            int[] pizzaNumre = new int[14];
+            while(pizzaResults.next()){
+                int pNummer = pizzaResults.getInt("PNUMMER");
+                int antalP = pizzaResults.getInt("ANTALP");
+                pizzaNumre[pNummer-1] = antalP;
+            }
+            returnArray.add(new Bestilling(pizzaNumre, ordreNummer, dato, cnavn, tlfno));
+        }
+        
+        return returnArray;
         }
 }
 
