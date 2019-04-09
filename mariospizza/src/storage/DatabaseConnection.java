@@ -10,6 +10,7 @@ import businesslogic.Pizza;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class DatabaseConnection implements StorageInterface {
 
     
-    private Connection makeConnection() throws Exception{
+    private Connection makeConnection() throws Exception {
         String user = "newuser";
         String password = "Aa12345678";
         String IP = "localhost";
@@ -34,9 +35,9 @@ public class DatabaseConnection implements StorageInterface {
             return DriverManager.getConnection(url, user, password);
         }
     
-     public ArrayList<Pizza> getMenukort() throws Exception{
+     public ArrayList<Pizza> getMenukort()  {
         
-        
+        try{
         Connection connection = makeConnection();
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM pizza");
@@ -50,11 +51,16 @@ public class DatabaseConnection implements StorageInterface {
             returnArray.add(new Pizza(nummer, navn, pris));
         }
         return returnArray;
-    
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
 }
-          public void addToOrdre(Bestilling bestilling) throws Exception{
+          public void addToOrdre(Bestilling bestilling) {
         
-        
+        try{
         Connection connection = makeConnection();
         Statement statement = connection.createStatement();
               System.out.println(LocalDate.now());
@@ -69,9 +75,16 @@ public class DatabaseConnection implements StorageInterface {
                 statement.executeUpdate("INSERT INTO antal VALUES(" + bestillingsArray[i] + ", " + nummer + ", " + (i+1) + ");");
             }
         }
-        }
-          public ArrayList<Bestilling> getBestillinger() throws Exception{
         
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+           
+        }
+          }
+          public ArrayList<Bestilling> getBestillinger() {
+          
+        try{  
         
         Connection connection = makeConnection();
         Statement statement = connection.createStatement();
@@ -98,8 +111,14 @@ public class DatabaseConnection implements StorageInterface {
         
         return returnArray;
         }
-          
-        public void fjernBestilling(int ordreNummer) throws Exception{
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        } 
+          }
+        
+
+            public void fjernBestilling(int ordreNummer) {
             Connection connection = makeConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM antal WHERE ORDRENO = " + ordreNummer + ";");
@@ -107,7 +126,7 @@ public class DatabaseConnection implements StorageInterface {
 
         }
         
-        public int countOrders() throws Exception{
+        public int countOrders() {
             Connection connection = makeConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select count(ORDRENO) from ordre;");
@@ -115,7 +134,7 @@ public class DatabaseConnection implements StorageInterface {
             return rs.getInt(1);
         }
         
-        public int maxOrdreNummer() throws Exception{
+        public int maxOrdreNummer() {
             Connection connection = makeConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
