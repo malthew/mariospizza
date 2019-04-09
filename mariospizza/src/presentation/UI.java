@@ -24,7 +24,7 @@ public interface UI {
 
     public String hovedmenuValg();
 
-    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer);
+    public void visBestillinger(ArrayList<Bestilling> aktiveOrdrer, boolean bypassRS);
 
     public int fjernBestilling(int arraySize);
 
