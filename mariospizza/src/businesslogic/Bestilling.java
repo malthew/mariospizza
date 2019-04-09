@@ -41,6 +41,12 @@ public class Bestilling {
         return tlfno;
     }
 
+    public void setOrdreNummer(int ordreNummer) {
+        this.ordreNummer = ordreNummer;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Bestilling{" + "pizzaNumre=" + Arrays.toString(pizzaNumre) + ", ordreNummer=" + ordreNummer + ", afhentningsTidspunkt=" + afhentningsTidspunkt + ", cname=" + cname + ", tlfno=" + tlfno + '}';

@@ -11,9 +11,9 @@ import storage.DatabaseConnection;
 
 public class MariosPizzaMain {
     public static void main(String[] args) throws Exception {
-        ArrayList<Pizza> menukort = DatabaseConnection.getMenuKortFromDB();
         
-        Controller ctrl = new Controller(new SystemUI(), menukort);
+        
+        Controller ctrl = new Controller(new SystemUI(), new DatabaseConnection());
         
         System.out.println("");
         System.out.println("##################################");

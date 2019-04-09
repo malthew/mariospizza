@@ -19,10 +19,10 @@ import java.util.ArrayList;
  *
  * @author allan
  */
-public class DatabaseConnection {
+public class DatabaseConnection implements StorageInterface {
 
-     public static ArrayList<Pizza> getMenuKortFromDB() throws Exception{
-        
+    
+    private Connection makeConnection() throws Exception{
         String user = "newuser";
         String password = "Aa12345678";
         String IP = "localhost";
@@ -31,7 +31,13 @@ public class DatabaseConnection {
         String serverTimezone = "serverTimezone=UTC";
         String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
         
-        Connection connection =DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(url, user, password);
+        }
+    
+     public ArrayList<Pizza> getMenukort() throws Exception{
+        
+        
+        Connection connection = makeConnection();
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM pizza");
         
@@ -46,25 +52,17 @@ public class DatabaseConnection {
         return returnArray;
     
 }
-          public static void addToOrdre(Bestilling bestilling) throws Exception{
+          public void addToOrdre(Bestilling bestilling) throws Exception{
         
-        String user = "newuser";
-        String password = "Aa12345678";
-        String IP = "localhost";
-        String PORT = "3306";
-        String DATABASE = "mario";
-        String serverTimezone = "serverTimezone=UTC";
-        String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
         
-        Connection connection =DriverManager.getConnection(url, user, password);
+        Connection connection = makeConnection();
         Statement statement = connection.createStatement();
               System.out.println(LocalDate.now());
         statement.executeUpdate("INSERT INTO ordre(afhent, oprettet, cname, tlfno) VALUES ('" + LocalDate.now() + " " + bestilling.getAfhentningsTidspunkt() +":00" + "', '" + LocalDate.now() + "'," + "'" + bestilling.getCname() + "'," + bestilling.getTlfno() + ");");
-        ResultSet result = statement.executeQuery("select count(ORDRENO) from ordre;");
-        int nummer = 0;
-         while (result.next()){
-            nummer = result.getInt("count(ORDRENO)");
-        }
+        ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
+        result.next();
+        int nummer = result.getInt(1);
+        
          int[] bestillingsArray = bestilling.getPizzaNumre();
         for(int i = 0; i < bestillingsArray.length; i++){
             if(bestillingsArray[i] != 0){
@@ -72,7 +70,7 @@ public class DatabaseConnection {
             }
         }
         }
-          public static ArrayList<Bestilling> visBestillinger( ) throws Exception{
+          public ArrayList<Bestilling> getBestillinger() throws Exception{
         
         
         Connection connection = makeConnection();
@@ -101,16 +99,30 @@ public class DatabaseConnection {
         return returnArray;
         }
           
-        private static Connection makeConnection() throws Exception{
-         String user = "newuser";
-        String password = "Aa12345678";
-        String IP = "localhost";
-        String PORT = "3306";
-        String DATABASE = "mario";
-        String serverTimezone = "serverTimezone=UTC";
-        String url = "jdbc:mysql://" + IP + ":" + PORT + "/" + DATABASE + "?" +  serverTimezone;
-        
-            return DriverManager.getConnection(url, user, password);
+        public void fjernBestilling(int ordreNummer) throws Exception{
+            Connection connection = makeConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM antal WHERE ORDRENO = " + ordreNummer + ";");
+            statement.executeUpdate("DELETE FROM ordre WHERE ORDRENO = " + ordreNummer + ";");
+
         }
+        
+        public int countOrders() throws Exception{
+            Connection connection = makeConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select count(ORDRENO) from ordre;");
+            rs.next();
+            return rs.getInt(1);
+        }
+        
+        public int maxOrdreNummer() throws Exception{
+            Connection connection = makeConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
+            result.next();
+            return result.getInt(1);
+           
+        }
+
 }
 

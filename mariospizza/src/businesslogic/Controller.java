@@ -4,23 +4,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import presentation.UI;
 import storage.DatabaseConnection;
+import storage.StorageInterface;
 
 // @Author: Allan, Aske, Casper T. og Malthe
 
 public class Controller {
     
     private UI ui;
-    private ArrayList<Pizza> menukort;
-    private ArrayList<Bestilling> aktiveOrdrer;
-    private ArrayList<Bestilling> historik;
-    private int currentOrderNr;
+    private StorageInterface storage;
 
-    public Controller(UI ui, ArrayList<Pizza> menukort) {
+
+    public Controller(UI ui, StorageInterface storage) {
         this.ui = ui;
-        this.menukort = menukort;
-        aktiveOrdrer = new ArrayList<Bestilling>();
-        historik = new ArrayList<>();
-        currentOrderNr = 1;
+        this.storage = storage;
     }
       
     
@@ -40,7 +36,7 @@ public class Controller {
                     visBestillinger();
                     break;
                 case "4":
-                    if (aktiveOrdrer.size()>0) {
+                    if (storage.countOrders()>0) {
                         fjernBestilling();
                     } else {
                         System.out.println("[Ingen aktive bestillinger]");
@@ -51,7 +47,7 @@ public class Controller {
                     seHistorik();
                     break;
                 case "9":
-                    ui.skrivHistorik(historik);
+                    //ui.skrivHistorik(historik);
                     quit = true;
                     break;
                 default:
@@ -63,7 +59,7 @@ public class Controller {
 
     }
 
-    public void opretBestilling() {
+    public void opretBestilling() throws Exception {
         // indlæs pizzanummer
         int[] pizzaNummer = ui.vælgPizza();
         System.out.println(Arrays.toString(pizzaNummer));
@@ -71,52 +67,41 @@ public class Controller {
         String afhentning = ui.vælgTidspunkt();
         String navn = ui.vælgNavn();
         String tlfno = ui.vælgTlfno();
-        Bestilling bestilling = new Bestilling(pizzaNummer, currentOrderNr, afhentning, navn, tlfno);
+        Bestilling bestilling = new Bestilling(pizzaNummer, 0, afhentning, navn, tlfno);
         // Tilføj bestilling til ordreliste
-        aktiveOrdrer.add(bestilling);
         try{
-        DatabaseConnection.addToOrdre(bestilling);
+        storage.addToOrdre(bestilling);
         }catch(Exception e){
             System.out.println("SQL DUTTER IKKE");
             System.out.println(e.getMessage());
         }
         // viser ordrenummer på skærm
-        ui.visOrdrenummer(currentOrderNr);
+        ui.visOrdrenummer(storage.maxOrdreNummer());
         // vis pizzavalg på skærm
+        bestilling.setOrdreNummer(storage.maxOrdreNummer());
         ui.visPizzaValg(bestilling.toString());
         // tæller ordre nummer op én gang
-        currentOrderNr++;
         
     }
     
-    
-
-    public ArrayList<Bestilling> getAktiveOrdrer() {
-        return aktiveOrdrer;
-    }
-
-    public ArrayList<Bestilling> getHistorik() {
-        return historik;
-    }
-
-    public void visMenukort() {
-        ui.visMenukort(menukort);
+    public void visMenukort() throws Exception{
+        ui.visMenukort(storage.getMenukort());
     }   
 
     private void visBestillinger() throws Exception {
         
-        ui.visBestillinger(DatabaseConnection.visBestillinger());
+        ui.visBestillinger(storage.getBestillinger());
     }
 
-    private void fjernBestilling() {
-        ui.visBestillinger(aktiveOrdrer);
-        int x = ui.fjernBestilling(aktiveOrdrer.size());
-        historik.add(aktiveOrdrer.get(x-1));
-        aktiveOrdrer.remove(x-1);
+    private void fjernBestilling() throws Exception {
+        visBestillinger();
+        int x = ui.fjernBestilling(storage.countOrders());
+        //TODO: FIX HISTORIK - historik.add(aktiveOrdrer.get(x-1));
+        storage.fjernBestilling(storage.getBestillinger().get(x-1).getOrdreNummer());
     }
 
     private void seHistorik() {
-        ui.seHistorik(historik);
+        //ui.seHistorik(historik);
         
     }
     
