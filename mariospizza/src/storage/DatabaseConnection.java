@@ -10,7 +10,6 @@ import businesslogic.Pizza;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -82,7 +81,7 @@ public class DatabaseConnection implements StorageInterface {
            
         }
           }
-          public ArrayList<Bestilling> getBestillinger() {
+        public ArrayList<Bestilling> getBestillinger() {
           
         try{  
         
@@ -115,32 +114,51 @@ public class DatabaseConnection implements StorageInterface {
             System.out.println(e.getMessage());
             return null;
         } 
-          }
+        }
         
 
-            public void fjernBestilling(int ordreNummer) {
-            Connection connection = makeConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM antal WHERE ORDRENO = " + ordreNummer + ";");
-            statement.executeUpdate("DELETE FROM ordre WHERE ORDRENO = " + ordreNummer + ";");
-
+        public void fjernBestilling(int ordreNummer) {
+                
+            try {
+                Connection connection = makeConnection();
+                Statement statement = connection.createStatement();
+                statement.executeUpdate("DELETE FROM antal WHERE ORDRENO = " + ordreNummer + ";");
+                statement.executeUpdate("DELETE FROM ordre WHERE ORDRENO = " + ordreNummer + ";");
+            }
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         
         public int countOrders() {
-            Connection connection = makeConnection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select count(ORDRENO) from ordre;");
-            rs.next();
-            return rs.getInt(1);
+            
+            try {
+                Connection connection = makeConnection();
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("select count(ORDRENO) from ordre;");
+                rs.next();
+                return rs.getInt(1);
+            }
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+                return -1;
+            }
         }
         
         public int maxOrdreNummer() {
-            Connection connection = makeConnection();
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
-            result.next();
-            return result.getInt(1);
-           
+            
+            try {
+                Connection connection = makeConnection();
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
+                result.next();
+                return result.getInt(1);
+            }
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+                return -1;
+            }
+                    
         }
 
 }
