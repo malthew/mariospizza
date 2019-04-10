@@ -6,11 +6,7 @@ import java.util.ArrayList;
 
 // @Author: Allan, Aske, Casper T. og Malthe
 
-public interface UI {
-
-//    public void visNavn(String str);
-//    
-//    public String vælgNavn();    
+public interface UI { 
 
     public int[] vælgPizza(int menuKortLength);
 

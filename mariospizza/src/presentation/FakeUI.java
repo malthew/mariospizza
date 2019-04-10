@@ -125,5 +125,6 @@ public class FakeUI implements UI {
     public String vælgTlfno() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
 }

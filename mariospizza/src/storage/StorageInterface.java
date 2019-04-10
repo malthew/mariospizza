@@ -9,17 +9,21 @@ import businesslogic.Bestilling;
 import businesslogic.Pizza;
 import java.util.ArrayList;
 
-/**
- *
- * @author allan
- */
+// @Author: Allan, Aske, Casper T. og Malthe
+
 public interface StorageInterface {
     
     public ArrayList<Pizza> getMenukort();
+    
     public void addToOrdre(Bestilling bestilling);
+    
     public ArrayList<Bestilling> getBestillinger();
+    
     public void fjernBestilling(int ordreNummer);
+    
     public int countOrders();
+    
     public int countMenuKort();
+    
     public int maxOrdreNummer();
 }

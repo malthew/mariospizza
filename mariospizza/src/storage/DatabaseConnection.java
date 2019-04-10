@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package storage;
 
 import businesslogic.Bestilling;
@@ -15,10 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-/**
- *
- * @author allan
- */
+// @Author: Allan, Aske, Casper T. og Malthe
+
 public class DatabaseConnection implements StorageInterface {
 
 
@@ -101,7 +94,7 @@ public class DatabaseConnection implements StorageInterface {
             Statement statement2 = connection.createStatement();
             ResultSet pizzaResults = statement2.executeQuery("SELECT * FROM antal WHERE ORDRENO =" + ordreNummer + ";");
             
-            int[] pizzaNumre = new int[14];
+            int[] pizzaNumre = new int[countMenuKort()];
             while(pizzaResults.next()){
                 int pNummer = pizzaResults.getInt("PNUMMER");
                 int antalP = pizzaResults.getInt("ANTALP");

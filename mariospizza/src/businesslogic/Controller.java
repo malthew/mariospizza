@@ -92,7 +92,7 @@ public class Controller {
         }
         
     }
-
+    
     private void seHistorik() {
         //ui.seHistorik(historik);
         
