@@ -15,10 +15,11 @@ import java.util.ArrayList;
  */
 public interface StorageInterface {
     
-    public ArrayList<Pizza> getMenukort()throws Exception;
-    public void addToOrdre(Bestilling bestilling)throws Exception;
-    public ArrayList<Bestilling> getBestillinger()throws Exception;
-    public void fjernBestilling(int ordreNummer)throws Exception;
-    public int countOrders()throws Exception;
-    public int maxOrdreNummer() throws Exception;
+    public ArrayList<Pizza> getMenukort();
+    public void addToOrdre(Bestilling bestilling);
+    public ArrayList<Bestilling> getBestillinger();
+    public void fjernBestilling(int ordreNummer);
+    public int countOrders();
+    public int countMenuKort();
+    public int maxOrdreNummer();
 }

@@ -21,7 +21,7 @@ public class FakeUI implements UI {
     }
 
     @Override
-    public int[] vælgPizza() {
+    public int[] vælgPizza(int menuKortLength) {
         output.add("Skriv hvilket pizzanummer kunden har bestilt");
        //return Integer.parseInt(input[index++]);
        return null;

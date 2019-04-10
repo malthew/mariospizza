@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class DatabaseConnection implements StorageInterface {
 
-    
+
     private Connection makeConnection() throws Exception {
         String user = "newuser";
         String password = "Aa12345678";
@@ -34,6 +34,7 @@ public class DatabaseConnection implements StorageInterface {
             return DriverManager.getConnection(url, user, password);
         }
     
+        @Override
      public ArrayList<Pizza> getMenukort()  {
         
         try{
@@ -52,17 +53,16 @@ public class DatabaseConnection implements StorageInterface {
         return returnArray;
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("GetMenukort - " + e.getMessage());
             return null;
         }
         
-}
+}    @Override
           public void addToOrdre(Bestilling bestilling) {
         
         try{
         Connection connection = makeConnection();
         Statement statement = connection.createStatement();
-              System.out.println(LocalDate.now());
         statement.executeUpdate("INSERT INTO ordre(afhent, oprettet, cname, tlfno) VALUES ('" + LocalDate.now() + " " + bestilling.getAfhentningsTidspunkt() +":00" + "', '" + LocalDate.now() + "'," + "'" + bestilling.getCname() + "'," + bestilling.getTlfno() + ");");
         ResultSet result = statement.executeQuery("SELECT MAX(ORDRENO) FROM ordre;");
         result.next();
@@ -77,10 +77,12 @@ public class DatabaseConnection implements StorageInterface {
         
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("AddToOrdre - " + e.getMessage());
            
         }
           }
+          
+        @Override
         public ArrayList<Bestilling> getBestillinger() {
           
         try{  
@@ -111,12 +113,12 @@ public class DatabaseConnection implements StorageInterface {
         return returnArray;
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("getBestillinger - " + e.getMessage());
             return null;
         } 
         }
         
-
+    @Override
         public void fjernBestilling(int ordreNummer) {
                 
             try {
@@ -126,10 +128,10 @@ public class DatabaseConnection implements StorageInterface {
                 statement.executeUpdate("DELETE FROM ordre WHERE ORDRENO = " + ordreNummer + ";");
             }
             catch(Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("FjernBestilling - " + e.getMessage());
             }
         }
-        
+            @Override
         public int countOrders() {
             
             try {
@@ -140,11 +142,25 @@ public class DatabaseConnection implements StorageInterface {
                 return rs.getInt(1);
             }
             catch(Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("countOrders - " + e.getMessage());
                 return -1;
             }
         }
-        
+            @Override
+        public int countMenuKort() {
+            try {
+                Connection connection = makeConnection();
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("select count(PNUMMER) from pizza;");
+                rs.next();
+                return rs.getInt(1);
+            }
+            catch(Exception e) {
+                System.out.println("countOrders - " + e.getMessage());
+                return -1;
+            }
+        }
+            @Override
         public int maxOrdreNummer() {
             
             try {
@@ -155,7 +171,7 @@ public class DatabaseConnection implements StorageInterface {
                 return result.getInt(1);
             }
             catch(Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("maxOrdreNummer - " + e.getMessage());
                 return -1;
             }
                     

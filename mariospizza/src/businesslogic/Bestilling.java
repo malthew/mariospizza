@@ -49,7 +49,13 @@ public class Bestilling {
     
     @Override
     public String toString() {
-        return "BESTILLING: | " + "Ordrenummer: " + ordreNummer + " | Valgte pizzaer: " + Arrays.toString(pizzaNumre) + "| Afhentes: " + afhentningsTidspunkt + " | Kundens navn: " + cname + " | Tlf.: " + tlfno;
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < pizzaNumre.length; i++){
+            if(pizzaNumre[i] > 0){
+                sb.append(" -Pizza Nr. " + (i+1) + ": "+ pizzaNumre[i] + " stk. \n");
+            }
+        }
+        return "BESTILLING: | " + "Ordrenummer: " + ordreNummer + "| Afhentes: " + afhentningsTidspunkt + " | Kundens navn: " + cname + " | Tlf.: " + tlfno + "\n" + sb.toString();
     }
     
     

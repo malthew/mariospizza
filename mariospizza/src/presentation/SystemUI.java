@@ -7,8 +7,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 // @Author: Allan, Aske, Casper T. og Malthe
 
@@ -17,21 +24,28 @@ public class SystemUI implements UI{
     Scanner scan = new Scanner(System.in);
 
     @Override
-    public int[] vælgPizza() {
-        System.out.println("Skriv hvilket pizzanummer kunden har bestilt:");
-        int[] bestillingsArray = new int[14];
-        
-        int input = Integer.parseInt(scan.nextLine());
-        
-        while(input != -1){
-            if (input>=1 && input<=14) {
-                bestillingsArray[input-1]++;
-                System.out.println("Skriv hvilket pizzanummer kunden har bestilt:");
-            } else{
-                System.out.println("Ikke en mulighed, prøv igen:");
-                
+    public int[] vælgPizza(int menuKortLength) {
+        System.out.println("Skriv Pizzanummer for at tilføje den til ordren, for at færdiggøre skriv '-1':");
+        int[] bestillingsArray = new int[menuKortLength];
+        boolean inputformat = false;
+        int input = 0;
+        while(!inputformat) {
+            try{
+                input = Integer.parseInt(scan.nextLine());
+                if (input>=1 && input<=menuKortLength
+                        ) {
+                    bestillingsArray[input-1]++;
+                    System.out.println("Tilføj Flere pizzaer eller afslut med '-1':");
+                }else if(input == -1 && Arrays.stream(bestillingsArray).sum() != 0) {
+                    inputformat = true;
+                }
+                else{
+                    throw new IllegalArgumentException();
+
+                }
+            }catch(Exception e) {
+                System.out.println("Ugyldigt input, prøv igen:");
             }
-            input = Integer.parseInt(scan.nextLine());
         }
         return bestillingsArray;
     }
@@ -61,8 +75,10 @@ public class SystemUI implements UI{
                 if(input.equals("-1")) {
                     inputFormat = true;
                 }
-                else
+                else{
                     System.out.println("Ugyldigt input, prøv igen:");
+                }
+                
             } 
         System.out.println("-----------------------------------------------");
         flushConsole();
@@ -117,7 +133,7 @@ public class SystemUI implements UI{
 
     @Override
     public int fjernBestilling(int arraySize) {
-        System.out.println("Fjern en bestilling (Indtast '-1' for retur):");
+        System.out.println("Fjern en bestilling:\nSkriv tallet til ventre for ordren for at fjerne den.\nskriv '-1' for returnere til hovedmenuen:");
         int returnStatement = 0;
         boolean inputFormat = false;
         while(!inputFormat) {
@@ -178,19 +194,56 @@ public class SystemUI implements UI{
     @Override
     public String vælgTidspunkt() {
         System.out.println("Skriv kundens afhentningstidspunkt: FORMAT(HH:MM)");
-        return scan.nextLine();
+        String input = "";
+        boolean inputFormat = false;
+        while(!inputFormat) {
+            try{
+                input = scan.nextLine();
+                DateFormat sdf = new SimpleDateFormat("hh:mm");
+                Date date = sdf.parse(input);
+                LocalTime.parse(input);
+                inputFormat = true;
+            }catch(Exception e) {
+                System.out.println("Ugyldigt input, prøv igen:");
+            }
+        }
+        return input;
     }
 
     @Override
     public String vælgNavn() {
-         System.out.println("Skriv kundens navn:");
-        return scan.nextLine();
+        System.out.println("Skriv kundens navn:");
+        String input = scan.nextLine();
+        while(input.length() == 0) {
+            System.out.println("Tomt input skriv kundens navn:");
+            input = scan.nextLine();
+        }
+        return input;
     }
 
     @Override
     public String vælgTlfno() {
-        System.out.println("Skriv kundens telefonnummer:");
-        return scan.nextLine();
+        System.out.println("Skriv kundens telefonnummer(minimum 1 cifre, max 8):");
+       
+        boolean inputformat = false;
+        String input = "";
+        
+        while(!inputformat) {
+            try{
+                input = scan.nextLine();
+                Integer.parseInt(input);
+                if (input.length()>=1 && input.length()<=8) {
+                    inputformat = true;
+                }else{
+                    throw new IllegalArgumentException();
+
+                }
+            }catch(Exception e) {
+                System.out.println("Ugyldigt input, prøv igen:");
+            }
+        }
+        flushConsole();
+        return input;
     }
     
     private void flushConsole() {
