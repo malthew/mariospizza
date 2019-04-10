@@ -75,8 +75,6 @@ public class Controller {
             System.out.println("SQL DUTTER IKKE");
             System.out.println(e.getMessage());
         }
-        // viser ordrenummer på skærm
-        ui.visOrdrenummer(storage.maxOrdreNummer());
         // vis pizzavalg på skærm
         bestilling.setOrdreNummer(storage.maxOrdreNummer());
         ui.visPizzaValg(bestilling.toString());
