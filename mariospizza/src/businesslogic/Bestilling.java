@@ -49,7 +49,7 @@ public class Bestilling {
     
     @Override
     public String toString() {
-        return "Bestilling{" + "pizzaNumre=" + Arrays.toString(pizzaNumre) + ", ordreNummer=" + ordreNummer + ", afhentningsTidspunkt=" + afhentningsTidspunkt + ", cname=" + cname + ", tlfno=" + tlfno + '}';
+        return "BESTILLING: | " + "Ordrenummer: " + ordreNummer + " | Valgte pizzaer: " + Arrays.toString(pizzaNumre) + "| Afhentes: " + afhentningsTidspunkt + " | Kundens navn: " + cname + " | Tlf.: " + tlfno;
     }
     
     
