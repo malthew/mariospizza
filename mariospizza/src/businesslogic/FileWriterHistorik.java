@@ -28,6 +28,9 @@ public class FileWriterHistorik {
     public void skrivHistorik() {
         try {
             File historikLog = new File("Historik.txt");
+            for(Bestilling bs : historik){
+                System.out.println(bs.toString());
+            }
             java.io.FileWriter filewriter = new java.io.FileWriter(historikLog);
             BufferedWriter buf = new BufferedWriter(filewriter);
             for (int i = 0; i < historik.size(); i++) {

@@ -49,7 +49,7 @@ public class Controller {
                     seHistorik();
                     break;
                 case "9":
-                    //ui.skrivHistorik(historik);
+                    fileWriter.skrivHistorik();
                     quit = true;
                     break;
                 default:
