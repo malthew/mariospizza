@@ -49,7 +49,7 @@ public class Controller {
                     seHistorik();
                     break;
                 case "9":
-                    fileWriter.skrivHistorik();
+                    skrivHistorik();
                     quit = true;
                     break;
                 default:
@@ -88,8 +88,8 @@ public class Controller {
     private void fjernBestilling() {
         ui.visBestillinger(storage.getBestillinger(), true);
         int x = ui.fjernBestilling(storage.countOrders());
-        fileWriter.addOrdreTilHistorik(storage.getBestillinger().get(x-1));
         if(x != -1) {
+           fileWriter.addOrdreTilHistorik(storage.getBestillinger().get(x-1));
            storage.fjernBestilling(storage.getBestillinger().get(x-1).getOrdreNummer());
         }
         
@@ -98,6 +98,26 @@ public class Controller {
     private void seHistorik() {
         ui.seHistorik(fileWriter.seHistorik()); 
         
+        
+    }
+
+    private void skrivHistorik() {
+        ArrayList<Pizza> menukort = storage.getMenukort();
+        ArrayList<Bestilling> historik = fileWriter.seHistorik();
+        int omsætning = 0;
+        int[] samletPizzaStatistik = new int[storage.countMenuKort()];
+        
+        for(Bestilling bs : historik){
+            for(int i = 0; i < bs.getPizzaNumre().length; i++){
+                samletPizzaStatistik[i] += bs.getPizzaNumre()[i];
+                
+            }
+        }
+        for (int x = 0; x < samletPizzaStatistik.length; x++){
+            omsætning += samletPizzaStatistik[x] * menukort.get(x).getPris();
+        }
+        
+        fileWriter.skrivHistorik(samletPizzaStatistik, omsætning);
         
     }
     
