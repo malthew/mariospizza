@@ -1,6 +1,7 @@
 package main;
 
 import businesslogic.Controller;
+import businesslogic.FileWriterHistorik;
 import businesslogic.Pizza;
 import java.util.ArrayList;
 import presentation.SystemUI;
@@ -12,7 +13,7 @@ import storage.DatabaseConnection;
 public class MariosPizzaMain {
     public static void main(String[] args) {
         
-        Controller ctrl = new Controller(new SystemUI(), new DatabaseConnection());
+        Controller ctrl = new Controller(new SystemUI(), new DatabaseConnection(), new FileWriterHistorik());
         
         System.out.println("");
         System.out.println("##################################");

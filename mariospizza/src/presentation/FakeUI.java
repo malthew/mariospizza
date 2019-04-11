@@ -93,23 +93,7 @@ public class FakeUI implements UI {
         output.add("Forkert input.");
     }
 
-    @Override
-    public void skrivHistorik(ArrayList<Bestilling> historik) {
-        
-        try {
-            File historikLog = new File("Historik.txt");
-            FileWriter filewriter = new FileWriter(historikLog);
-            BufferedWriter buf = new BufferedWriter(filewriter);
-            for (int i = 0; i < historik.size(); i++) {
-            buf.write(historik.get(i).toString());
-            buf.newLine();
-            }
-            buf.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            
-        }
-    }
+
 
     @Override
     public String vælgTidspunkt() {

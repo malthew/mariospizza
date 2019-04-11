@@ -28,8 +28,6 @@ public interface UI {
 
     public void notAnOption();
 
-    public void skrivHistorik(ArrayList<Bestilling> historik);
-
     public String vælgTidspunkt();
 
     public String vælgNavn();

@@ -12,11 +12,13 @@ public class Controller {
     
     private UI ui;
     private StorageInterface storage;
+    private FileWriterHistorik fileWriter;
 
 
-    public Controller(UI ui, StorageInterface storage) {
+    public Controller(UI ui, StorageInterface storage, FileWriterHistorik fileWriter) {
         this.ui = ui;
         this.storage = storage;
+        this.fileWriter = fileWriter;
     }
       
     
@@ -86,7 +88,7 @@ public class Controller {
     private void fjernBestilling() {
         ui.visBestillinger(storage.getBestillinger(), true);
         int x = ui.fjernBestilling(storage.countOrders());
-        //TODO: FIX HISTORIK - historik.add(aktiveOrdrer.get(x-1));
+        fileWriter.addOrdreTilHistorik(storage.getBestillinger().get(x-1));
         if(x != -1) {
            storage.fjernBestilling(storage.getBestillinger().get(x-1).getOrdreNummer());
         }
@@ -94,7 +96,8 @@ public class Controller {
     }
     
     private void seHistorik() {
-        //ui.seHistorik(historik);
+        ui.seHistorik(fileWriter.seHistorik()); 
+        
         
     }
     

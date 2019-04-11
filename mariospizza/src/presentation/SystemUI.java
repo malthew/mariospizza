@@ -158,12 +158,25 @@ public class SystemUI implements UI{
 
     @Override
     public void seHistorik(ArrayList<Bestilling> historik) {
-        int i = 1;
-        for(Bestilling bestilling:historik) {
-            System.out.println("" + i++ + ". " + bestilling.toString());
-         
-    }
+        for(Bestilling bestilling : historik) {
+            
+            System.out.println(bestilling.toString());
+        }
         System.out.println("-----------------------------------------------");
+        System.out.println("For at retunere til Hovedmenu indtast '-1':");
+            boolean inputFormat = false;
+            while(!inputFormat){
+                String input = scan.nextLine();
+                if(input.equals("-1")) {
+                    inputFormat = true;
+                }
+                else{
+                    System.out.println("Ugyldigt input, prøv igen:");
+                }
+                
+            } 
+        System.out.println("-----------------------------------------------");
+        flushConsole();
     }
 
     @Override
@@ -172,24 +185,7 @@ public class SystemUI implements UI{
         System.out.println("-----------------------------------------------");
     }
 
-    @Override
-    public void skrivHistorik(ArrayList<Bestilling> historik) {
- 
-        try {
-            File historikLog = new File("Historik.txt");
-            FileWriter filewriter = new FileWriter(historikLog);
-            BufferedWriter buf = new BufferedWriter(filewriter);
-            for (int i = 0; i < historik.size(); i++) {
-            buf.write(historik.get(i).toString());
-            buf.newLine();
-            }
-            buf.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            
-        }
 
-    }
 
     @Override
     public String vælgTidspunkt() {
