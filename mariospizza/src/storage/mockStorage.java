@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author allan
+ * @author Allan, Aske, Casper og Malthe
  */
 public class mockStorage implements StorageInterface{
     int ordreno = 1;

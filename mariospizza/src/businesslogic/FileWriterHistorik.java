@@ -39,10 +39,10 @@ public class FileWriterHistorik {
         for(int i = 0; i < statistikPizza.length; i++){
                 sb.append(" -Pizza Nr. " + (i+1) + ": "+ statistikPizza[i] + "\n");
         }
-            buf.write("samlet pizza køb: ");
+            buf.write("Samlet pizza køb: ");
             buf.newLine();
             buf.write(sb.toString());
-            buf.write("Omsætning for for listen " + omsætning);
+            buf.write("Totale omsætning: " + omsætning + " kr.");
             buf.flush();
         } catch (IOException e) {
             System.out.println(e.getMessage());

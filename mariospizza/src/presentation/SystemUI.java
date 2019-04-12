@@ -133,7 +133,7 @@ public class SystemUI implements UI{
 
     @Override
     public int fjernBestilling(int arraySize) {
-        System.out.println("Fjern en bestilling:\nSkriv tallet til ventre for ordren for at fjerne den.\nskriv '-1' for returnere til hovedmenuen:");
+        System.out.println("Fjern en bestilling:\nSkriv tallet til venstre for ordren for at fjerne den.\nskriv '-1' for returnere til hovedmenuen:");
         int returnStatement = 0;
         boolean inputFormat = false;
         while(!inputFormat) {

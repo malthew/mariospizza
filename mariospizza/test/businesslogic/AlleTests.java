@@ -11,7 +11,7 @@ import storage.mockStorage;
 
 /**
  *
- * @author wosch
+ * @author Allan, Aske, Casper og Malthe
  */
 public class AlleTests {
     @Test
