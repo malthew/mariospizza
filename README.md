@@ -10,3 +10,4 @@ thomassen.casper@gmail.com
 
 ### Functionalities
 Known bugs:
+- Hvis man taster '0' når man fjerner en bestilling crasher programmet.
